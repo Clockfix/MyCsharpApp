@@ -150,13 +150,13 @@ namespace MyNewApp
                 byte[] txBuffer = new byte[64];
                 AddTextIn(this, COMTextBox, rxString);
                 switch (rxString[0])
-                {
+                {                    
                     case 'b':
-                        
-                        //SetText(this, COMTextBoxIn,  rxString);
-                        break;
-                    case 'v':
-                        
+                        string lastBrightness = rxString.Substring(1);
+                        //BrightnessBar.Value = Int32.Parse(lastBrightness);
+                        //SetText(this, BrightnessValueBox, lastBrightness.ToString());
+                        lastBrightness = "Brightness now:" + lastBrightness;                        
+                        SetText(this, BrightnessNowTextBox, lastBrightness);                  
                         break;
                     case 'f':
                         
@@ -168,7 +168,34 @@ namespace MyNewApp
                 SetText(this, TextBoxSettings, ex.Message);
             }
         }
+
+        private void BrightnessBar_Scroll(object sender, EventArgs e)
+        {
+            updateBrightness();
+        }
+
+        private void updateBrightness()
+        {
+            
+            if (mySerialPort.IsOpen == false)
+            {
+                MessageBox.Show("Please connect to COM port first!");
+                return;
+            } else {
+                double BrightnessNew = BrightnessBar.Value;
                 
+                SetText(this, BrightnessNowTextBox, string.Format("Brightness now:{0}", BrightnessNew));
+                string str = "b" + (int)BrightnessBar.Value;
+                //txBuffer[0] = Convert.ToByte('b');            
+                //txBuffer[1] = (byte)BrightnessBar.Value;
+                //txBuffer[2] = 0x0A; //Newline
+                AddTextOut(this, COMTextBox, str);
+                mySerialPort.Write(str + "\n");
+            }
+            
+
+        }
+
         // all Color buttons:
         private void PrintColor(Control ctrl)
         {
@@ -177,7 +204,7 @@ namespace MyNewApp
             // Get first three characters.
             // string sub = input.Substring(0, 3);
             str = str.Substring(str.Length - 2);
-            str = "b" + str + ctrl.BackColor.R.ToString("D3") + ctrl.BackColor.G.ToString("D3") + ctrl.BackColor.B.ToString("D3");
+            str = "l" + str + ctrl.BackColor.R.ToString("D3") + ctrl.BackColor.G.ToString("D3") + ctrl.BackColor.B.ToString("D3");
             
 
             if (mySerialPort.IsOpen)
@@ -299,6 +326,24 @@ namespace MyNewApp
             {
                 SetText(this, TextBoxSettings, "First connect to COM port!");
             }
+        }
+
+        private void buttonPlus_Click(object sender, EventArgs e)
+        {
+            if (BrightnessBar.Value < 255)
+            {
+                BrightnessBar.Value++;
+            }
+            updateBrightness();
+        }
+
+        private void buttonMinus_Click(object sender, EventArgs e)
+        {
+            if (BrightnessBar.Value > 1)
+            {
+                BrightnessBar.Value--;
+            }
+            updateBrightness();
         }
     }
 }

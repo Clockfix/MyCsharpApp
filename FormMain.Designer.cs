@@ -113,9 +113,16 @@
             this.ColorYelow = new System.Windows.Forms.Button();
             this.ColorOrange = new System.Windows.Forms.Button();
             this.buttonClear = new System.Windows.Forms.Button();
+            this.groupBoxBrightness = new System.Windows.Forms.GroupBox();
+            this.BrightnessNowTextBox = new System.Windows.Forms.RichTextBox();
+            this.buttonPlus = new System.Windows.Forms.Button();
+            this.buttonMinus = new System.Windows.Forms.Button();
+            this.BrightnessBar = new System.Windows.Forms.TrackBar();
             this.groupSettings.SuspendLayout();
             this.groupBoxCOM.SuspendLayout();
             this.groupBoxColor.SuspendLayout();
+            this.groupBoxBrightness.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BrightnessBar)).BeginInit();
             this.SuspendLayout();
             // 
             // groupSettings
@@ -185,7 +192,7 @@
             this.groupBoxCOM.Controls.Add(this.COMTextBox);
             this.groupBoxCOM.Location = new System.Drawing.Point(32, 181);
             this.groupBoxCOM.Name = "groupBoxCOM";
-            this.groupBoxCOM.Size = new System.Drawing.Size(354, 154);
+            this.groupBoxCOM.Size = new System.Drawing.Size(354, 252);
             this.groupBoxCOM.TabIndex = 1;
             this.groupBoxCOM.TabStop = false;
             this.groupBoxCOM.Text = "COM port monitor";
@@ -198,7 +205,7 @@
             this.COMTextBox.Name = "COMTextBox";
             this.COMTextBox.ReadOnly = true;
             this.COMTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.COMTextBox.Size = new System.Drawing.Size(312, 112);
+            this.COMTextBox.Size = new System.Drawing.Size(312, 218);
             this.COMTextBox.TabIndex = 0;
             this.COMTextBox.Text = "";
             // 
@@ -1186,7 +1193,7 @@
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(422, 357);
+            this.buttonClear.Location = new System.Drawing.Point(410, 345);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(75, 23);
             this.buttonClear.TabIndex = 5;
@@ -1194,11 +1201,70 @@
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
+            // groupBoxBrightness
+            // 
+            this.groupBoxBrightness.Controls.Add(this.BrightnessNowTextBox);
+            this.groupBoxBrightness.Controls.Add(this.buttonPlus);
+            this.groupBoxBrightness.Controls.Add(this.buttonMinus);
+            this.groupBoxBrightness.Controls.Add(this.BrightnessBar);
+            this.groupBoxBrightness.Location = new System.Drawing.Point(503, 345);
+            this.groupBoxBrightness.Name = "groupBoxBrightness";
+            this.groupBoxBrightness.Size = new System.Drawing.Size(229, 88);
+            this.groupBoxBrightness.TabIndex = 67;
+            this.groupBoxBrightness.TabStop = false;
+            this.groupBoxBrightness.Text = "Brightness";
+            // 
+            // BrightnessNowTextBox
+            // 
+            this.BrightnessNowTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.BrightnessNowTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BrightnessNowTextBox.Location = new System.Drawing.Point(53, 52);
+            this.BrightnessNowTextBox.Multiline = false;
+            this.BrightnessNowTextBox.Name = "BrightnessNowTextBox";
+            this.BrightnessNowTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.BrightnessNowTextBox.Size = new System.Drawing.Size(128, 22);
+            this.BrightnessNowTextBox.TabIndex = 4;
+            this.BrightnessNowTextBox.Text = "Brightness now:";
+            // 
+            // buttonPlus
+            // 
+            this.buttonPlus.Location = new System.Drawing.Point(187, 52);
+            this.buttonPlus.Name = "buttonPlus";
+            this.buttonPlus.Size = new System.Drawing.Size(22, 22);
+            this.buttonPlus.TabIndex = 2;
+            this.buttonPlus.Text = "+";
+            this.buttonPlus.UseVisualStyleBackColor = true;
+            this.buttonPlus.Click += new System.EventHandler(this.buttonPlus_Click);
+            // 
+            // buttonMinus
+            // 
+            this.buttonMinus.Location = new System.Drawing.Point(25, 52);
+            this.buttonMinus.Name = "buttonMinus";
+            this.buttonMinus.Size = new System.Drawing.Size(22, 22);
+            this.buttonMinus.TabIndex = 1;
+            this.buttonMinus.Text = "-";
+            this.buttonMinus.UseVisualStyleBackColor = true;
+            this.buttonMinus.Click += new System.EventHandler(this.buttonMinus_Click);
+            // 
+            // BrightnessBar
+            // 
+            this.BrightnessBar.LargeChange = 10;
+            this.BrightnessBar.Location = new System.Drawing.Point(11, 19);
+            this.BrightnessBar.Maximum = 255;
+            this.BrightnessBar.Minimum = 1;
+            this.BrightnessBar.Name = "BrightnessBar";
+            this.BrightnessBar.Size = new System.Drawing.Size(212, 45);
+            this.BrightnessBar.TabIndex = 0;
+            this.BrightnessBar.TickFrequency = 51;
+            this.BrightnessBar.Value = 50;
+            this.BrightnessBar.Scroll += new System.EventHandler(this.BrightnessBar_Scroll);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(745, 407);
+            this.ClientSize = new System.Drawing.Size(745, 445);
+            this.Controls.Add(this.groupBoxBrightness);
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.groupBoxColor);
             this.Controls.Add(this.butto556);
@@ -1272,6 +1338,9 @@
             this.groupSettings.ResumeLayout(false);
             this.groupBoxCOM.ResumeLayout(false);
             this.groupBoxColor.ResumeLayout(false);
+            this.groupBoxBrightness.ResumeLayout(false);
+            this.groupBoxBrightness.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BrightnessBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1363,6 +1432,11 @@
         private System.Windows.Forms.Button ColorOrange;
         internal System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.GroupBox groupBoxBrightness;
+        private System.Windows.Forms.TrackBar BrightnessBar;
+        private System.Windows.Forms.Button buttonPlus;
+        private System.Windows.Forms.Button buttonMinus;
+        private System.Windows.Forms.RichTextBox BrightnessNowTextBox;
     }
 }
 

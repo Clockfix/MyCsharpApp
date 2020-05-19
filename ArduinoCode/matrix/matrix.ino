@@ -5,7 +5,7 @@
 #define COLOR_ORDER GRB
 #define CHIPSET     WS2812B
 
-#define BRIGHTNESS 5
+byte BRIGHTNESS = 255;
 
 // Helper functions for an two-dimensional XY matrix of pixels.
 // Simple 2-D demo code is included as well.
@@ -165,6 +165,8 @@ uint16_t XYsafe( uint8_t x, uint8_t y)
 String inputString = "";         // a String to hold incoming data
 bool stringComplete = false;  // whether the string is complete
 
+int counter = 0;
+
 
 void loop()
 {
@@ -173,9 +175,10 @@ void loop()
 
     if (stringComplete) {
         
-        int bPosition = inputString.indexOf('b');
+        int lPosition = inputString.indexOf('l');
         int cPosition = inputString.indexOf('c');
-        if (bPosition == 0 ){                       
+        int bPosition = inputString.indexOf('b');
+        if (lPosition == 0 ){                       
             byte place =  inputString.substring(1, 3).toInt();
             byte red =  inputString.substring(3, 6).toInt();
             byte blue =  inputString.substring(6, 9).toInt();
@@ -188,14 +191,31 @@ void loop()
         } else if (cPosition == 0 ) {
             fill_solid( leds, NUM_LEDS, CRGB(0,0,0));
             Serial.print("Clear!\n");
+          
+          } else if (bPosition == 0 ) {
+            counter = 0;
+            BRIGHTNESS =  inputString.substring(1, 4).toInt();   
+            FastLED.setBrightness( BRIGHTNESS );
+            delay(1);
+            Serial.print("b");
+            Serial.println(BRIGHTNESS);
           }
         //delay(500);
-         
+       
         stringComplete = false; 
         inputString = "";  
     }
-}
 
+     if (counter < 5000) {
+          counter++;
+        } else {
+          counter = 0;
+          Serial.print("b");
+          Serial.println(BRIGHTNESS);
+          //Serial.print("\n");
+        }
+   
+}
 
 void setup() {
     Serial.begin(9600);
@@ -217,4 +237,5 @@ void serialEvent() {
       stringComplete = true;
     }
   }
+  
 }
